@@ -1,0 +1,34 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Liste des Acteurs {% endblock %}
+{% block ctitle %}Liste des Acteurs {% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actor in actors %}
+            <tr>
+                <td>{{ actor.actorId }}</td>
+                <td>{{ actor.nameActor }}</td>
+                <td>
+                    <a href="{{ path('actor_show', {'actor_id': actor.actorid}) }}">show</a>
+                    <a href="{{ path('actor_edit', {'actor_id': actor.actorid}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun acteur trouvé!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('actor_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,43 @@
+
+<div class="col-sm-5">
+	{{ form_start(form) }}
+	    <div class="my-custom-class-for-errors">
+	        {{ form_errors(form) }}
+	    </div>
+		<div class="form-group">
+			{{ form_label(form.title) }} 
+			{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.description) }} 
+			{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.publication_date) }} 
+			{{ form_widget(form.publication_date, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.qte) }} 
+			{{ form_widget(form.qte, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.duration) }} 
+			{{ form_widget(form.duration, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.icone) }} 
+			{{ form_widget(form.icone, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.category) }} 
+			{{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.producer) }} 
+			{{ form_widget(form.producer, {'attr': {'class': 'form-control'}}) }}
+		</div>										
+		<div class="form-group">
+			<button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
+		</div> 		 		 
+	{{ form_end(form) }}
+</div>

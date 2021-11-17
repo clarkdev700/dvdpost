@@ -1,0 +1,34 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Liste des R&eacute;alisateurs {% endblock %}
+{% block ctitle %}Liste des R&eacute;alisateurs {% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for producer in producers %}
+            <tr>
+                <td>{{ producer.producerid }}</td>
+                <td>{{ producer.nameProducer }}</td>
+                <td>
+                    <a href="{{ path('producer_show', {'producer_id': producer.producerid}) }}">show</a>
+                    <a href="{{ path('producer_edit', {'producer_id': producer.producerid}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun R&ealisateur trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('producer_new') }}">Nouveau</a>
+{% endblock %}
