@@ -1,19 +1,195 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<html lang="en">
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CUbuntu:300,400,500,700" rel="stylesheet">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="{{asset('css/bootstrap-reboot.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/bootstrap-grid.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/jquery.mCustomScrollbar.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/nouislider.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/ionicons.min.css')}}">
+	<link rel="stylesheet" href="{{asset('css/plyr.css')}}">
+	<link rel="stylesheet" href="{{asset('css/photoswipe.css')}}">
+	<link rel="stylesheet" href="{{asset('css/default-skin.css')}}">
+	<link rel="stylesheet" href="{{asset('css/main.css')}}">
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/png" href="{{asset('icon/favicon-32x32.png')}}" sizes="32x32">
+	<link rel="apple-touch-icon" href="{{asset('icon/favicon-32x32.png')}}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{asset('icon/apple-touch-icon-72x72.png')}}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{{asset('icon/apple-touch-icon-114x114.png')}}">
+	<link rel="apple-touch-icon" sizes="144x144" href="{{asset('icon/apple-touch-icon-144x144.png')}}">
+
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="Dmitry Volkov">
+	<title>FlixGo – Location de DVD en ligne</title>
+
+</head>
+<body class="body">
+	
+	<!-- header -->
+	<header class="header">
+		<div class="header__wrap">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="header__content">
+							<!-- header logo -->
+							<a href="#" class="header__logo">
+								<img src="{{asset('img/logo.svg')}}" alt="">
+							</a>
+							<!-- end header logo -->
+
+							<!-- header nav -->
+							<ul class="header__nav">
+								<!-- dropdown -->
+								<li class="header__nav-item">
+									<a class="dropdown-toggle header__nav-link" href="{{path('home')}}" role="button" id="dropdownMenuHome">Accueil</a>
+								</li>
+								<!-- end dropdown -->
+
+								<!-- dropdown -->
+								<li class="header__nav-item">
+									<a class="dropdown-toggle header__nav-link" href="{{path('product_index')}}" role="button" id="dropdownMenuCatalog">Catalogue</a>
+								</li>
+								<!-- end dropdown -->
+
+								<li class="header__nav-item">
+									<a href="#" class="header__nav-link">Prix</a>
+								</li>
+
+								<li class="header__nav-item">
+									<a href="#" class="header__nav-link">Faq</a>
+								</li>
+							</ul>
+							<!-- end header nav -->
+
+							<!-- header auth -->
+							<div class="header__auth">
+								<button class="header__search-btn" type="button">
+									<i class="icon ion-ios-search"></i>
+								</button>
+
+								<a href="#" class="header__sign-in">
+									<i class="icon ion-ios-log-in"></i>
+									<span>Login</span>
+								</a>
+							</div>
+							<!-- end header auth -->
+
+							<!-- header menu btn -->
+							<button class="header__btn" type="button">
+								<span></span>
+								<span></span>
+								<span></span>
+							</button>
+							<!-- end header menu btn -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- header search -->
+		<form action="#" class="header__search">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="header__search-content">
+							<input type="text" placeholder="Rechercher une vidéo">
+
+							<button type="button">
+								<i class="icon ion-ios-search"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- end header search -->
+	</header>
+	<!-- end header -->
+	{% block content %}
+
+	{% endblock %}
+	<!-- footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+
+				<!-- footer list -->
+				<div class="col-6 col-sm-4 col-md-3">
+					<h6 class="footer__title">Site exploration</h6>
+					<ul class="footer__list">
+						<li><a href="#">Accueil</a></li>
+						<li><a href="#">Catalogue</a></li>
+						<li><a href="#">Prix</a></li>
+						<li><a href="#">Faq</a></li>
+					</ul>
+				</div>
+				<!-- end footer list -->
+
+				<!-- footer list -->
+				<div class="col-6 col-sm-4 col-md-3">
+					<h6 class="footer__title">A propos</h6>
+					<ul class="footer__list">
+						<li><a href="#">Qui sommes-nous ?</a></li>
+						<li><a href="#">Confidentialité</a></li>
+						<li><a href="#">Conditions générales</a></li>
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</div>
+				<!-- end footer list -->
+
+				<!-- footer list -->
+				<div class="col-12 col-sm-4 col-md-3">
+					<h6 class="footer__title">Suivez nous</h6>
+					<ul class="footer__social">
+						<li class="facebook"><a href="#"><i class="icon ion-logo-facebook"></i></a></li>
+						<li class="instagram"><a href="#"><i class="icon ion-logo-instagram"></i></a></li>
+						<li class="twitter"><a href="#"><i class="icon ion-logo-twitter"></i></a></li>
+						<li class="vk"><a href="#"><i class="icon ion-logo-vk"></i></a></li>
+					</ul>
+				</div>
+				<!-- end footer list -->
+
+				<!-- footer copyright -->
+				<div class="col-12">
+					<div class="footer__copyright">
+						<small>
+							<a target="_blank" href="#">
+								Copyright © 2021. Tous droit r&eacute;serv&eacute
+							</a>
+						</small>
+					</div>
+				</div>
+				<!-- end footer copyright -->
+			</div>
+		</div>
+	</footer>
+	<!-- end footer -->
+
+	<!-- JS -->
+	<script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+	<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+	<script src="{{asset('js/owl.carousel.min.js')}}"></script>
+	<script src="{{asset('js/jquery.mousewheel.min.js')}}"></script>
+	<script src="{{asset('js/jquery.mCustomScrollbar.min.js')}}"></script>
+	<script src="{{asset('js/wNumb.js')}}"></script>
+	<script src="{{asset('js/nouislider.min.js')}}"></script>
+	<script src="{{asset('js/plyr.min.js')}}"></script>
+	<script src="{{asset('js/jquery.morelines.min.js')}}"></script>
+	<script src="{{asset('js/photoswipe.min.js')}}"></script>
+	<script src="{{asset('js/photoswipe-ui-default.min.js')}}"></script>
+	<script src="{{asset('js/main.js')}}"></script>
+</body>
+
 </html>
