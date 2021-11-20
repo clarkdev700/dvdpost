@@ -9,10 +9,6 @@
 			{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
 		</div>
 		<div class="form-group">
-			{{ form_label(form.description) }} 
-			{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-		</div>
-		<div class="form-group">
 			{{ form_label(form.publication_date) }} 
 			{{ form_widget(form.publication_date, {'attr': {'class': 'form-control'}}) }}
 		</div>
@@ -35,7 +31,15 @@
 		<div class="form-group">
 			{{ form_label(form.producer) }} 
 			{{ form_widget(form.producer, {'attr': {'class': 'form-control'}}) }}
-		</div>										
+		</div>
+		<div class="form-group">
+			{{ form_label(form.actor) }} 
+			{{ form_widget(form.actor, {'attr': {'class': 'form-control'}}) }}
+		</div>		
+		<div class="form-group">
+			{{ form_label(form.description) }} 
+			{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+		</div>												
 		<div class="form-group">
 			<button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
 		</div> 		 		 
