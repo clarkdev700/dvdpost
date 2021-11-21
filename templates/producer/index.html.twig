@@ -4,7 +4,7 @@
 {% block ctitle %}Liste des R&eacute;alisateurs {% endblock %}
 
 {% block content %}
-    <table class="table">
+    <table class="table table-bordered table-striped" id="producer">
         <thead>
             <tr>
                 <th>Id</th>
@@ -18,8 +18,7 @@
                 <td>{{ producer.producerid }}</td>
                 <td>{{ producer.nameProducer }}</td>
                 <td>
-                    <a href="{{ path('producer_show', {'producer_id': producer.producerid}) }}">show</a>
-                    <a href="{{ path('producer_edit', {'producer_id': producer.producerid}) }}">edit</a>
+                    <a href="{{ path('producer_edit', {'producer_id': producer.producerid}) }}"><i class="fas fa-pen"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -31,4 +30,28 @@
     </table>
 
     <a href="{{ path('producer_new') }}">Nouveau</a>
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#producer').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      language: {
+            url: '../plugins/dataTables.fr_fr.json'
+        },
+      columnDefs: [
+        { orderable: false, width: "10%", targets: 2, className: 'dt-center' }
+      ],        
+    });
+ });
+
+ </script>
 {% endblock %}

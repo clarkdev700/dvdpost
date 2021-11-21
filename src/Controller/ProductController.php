@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use App\Service\FileUploader;
 
 /**
@@ -57,13 +58,13 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() /*&& $form->isValid()*/) {
             //--
             $file = $request->files->get('product')['icone'];
             
             $actors = $request->request->get('product')['actor'];
             $entityManager = $this->getDoctrine()->getManager();
-            $product->setIcone("");
+            $product->setIcone("")->setStatus(0);
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -87,6 +88,7 @@ class ProductController extends AbstractController
         return $this->renderForm('product/new.html.twig', [
             'product' => $product,
             'form' => $form,
+            'actors' => [] 
         ]);
     }
 
@@ -106,17 +108,57 @@ class ProductController extends AbstractController
     public function edit(Request $request, Product $product): Response
     {
         $form = $this->createForm(ProductType::class, $product);
+        $em = $this->getDoctrine()->getManager();
+        $oldActors = $em->getRepository(ProductActor::class)->findByProduct($product->getProductId());
+
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted() /*&& $form->isValid()*/) {
+            
+            $file = $request->files->get('product')['icone'];
+            //
+            $product->setStatus(0);
+            if (!empty($file)) {
+                $fileName = $this->saveFile($file, $product->getProductId());
+                $product->setIcone($fileName);
+            } else {
+                $uow = $em->getUnitOfWork();
+                $originalData = $uow->getOriginalEntityData($product);
+                $product->setIcone($originalData['icone']);
+            }
 
-            return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
+            if (count($oldActors) > 0) {
+                foreach ($oldActors as $actorId) {
+                    $actor = $em->getRepository(ProductActor::class)->find($actorId);
+                    $em->remove($actor);
+                }
+            }
+            $em->flush();
+
+            $actors = $request->request->get('product')['actor'];
+            if (count($actors) > 0) {
+                foreach ($actors as $key => $actorId) {
+                    $actor = $em->getRepository(Actor::class)->find($actorId);
+                    $actorProductName = new ProductActor($product, $actor);
+                    $em->persist($actorProductName);
+                }
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('back_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $pactors = [];
+        if (count($oldActors) > 0) {
+            foreach ($oldActors as $actor) {
+                $pactors[] = $actor->getActor()->getActorId();
+            }
+        }
         return $this->renderForm('product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
+            'actors' => $pactors 
         ]);
     }
 
@@ -125,13 +167,14 @@ class ProductController extends AbstractController
      */
     public function delete(Request $request, Product $product): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getProduct_id(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$product->getProductId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($product);
+            $product->setStatus(1);
+            //$entityManager->remove($product);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_product_index', [], Response::HTTP_SEE_OTHER);
     }
 
     private function saveFile(UploadedFile $file, int $productId) {

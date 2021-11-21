@@ -4,19 +4,16 @@
 {% block ctitle %}Liste des Films {%endblock%}
 
 {% block content %}
-    <h1>Product index</h1>
-
-    <table class="table">
+    <table class="table table-bordered table-striped" id="product">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
                 <th>Description</th>
-                <th>Date publication</th>
+                <th>Sortie</th>
+                <th>Réalisateur</th>
                 <th>Qte</th>
                 <th>Durée</th>
-                <th>Icone</th>
-                <th>Status</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -25,24 +22,48 @@
             <tr>
                 <td>{{ product.productid }}</td>
                 <td>{{ product.title }}</td>
-                <td>{{ product.description }}</td>
+                <td>{{ product.description |u.truncate(50, '...') }}</td>
                 <td>{{ product.publicationDate ? product.publicationDate|date('Y-m-d') : '' }}</td>
+                <td>{{ product.producer.nameproducer }}</td>
                 <td>{{ product.qte }}</td>
                 <td>{{ product.duration }}</td>
-                <td>{{ product.icone }}</td>
-                <td>{{ product.status }}</td>
                 <td>
-                    <a href="{{ path('product_show', {'product_id': product.productid}) }}">show</a>
+                    {{ include('product/_delete_form.html.twig') }}
                     <a href="{{ path('product_edit', {'product_id': product.productid}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">Aucun Film trouvé</td>
+                <td colspan="8">Aucun Film trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <a href="{{ path('product_new') }}">Nouveau</a>
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#product').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      language: {
+            url: '../plugins/dataTables.fr_fr.json'
+        },
+      columnDefs: [
+        { orderable: false, targets: 2 },
+        { orderable: false, width: "10%", targets: 7 }
+      ],        
+    });
+ });
+
+ </script>
 {% endblock %}

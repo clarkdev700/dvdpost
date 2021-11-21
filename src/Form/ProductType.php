@@ -39,7 +39,10 @@ class ProductType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image',
                     ])
-                ]])
+                ],
+                'data_class' => null,
+                'required'=>false
+            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class, 
                 'query_builder' => function (EntityRepository $er) {

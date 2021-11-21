@@ -3,7 +3,7 @@
 {% block title %}Liste des genres{% endblock %}
 {% block ctitle %}Liste des Genres {% endblock %}
 {% block content %}
-    <table class="table">
+    <table class="table table-bordered table-striped" id="category">
         <thead>
             <tr>
                <th>Id</th>
@@ -17,8 +17,7 @@
                 <td>{{ category.categoryid }}</td>
                 <td>{{ category.label }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'category_id': category.categoryid}) }}">show</a>
-                    <a href="{{ path('category_edit', {'category_id': category.categoryid}) }}">edit</a>
+                    <a href="{{ path('category_edit', {'category_id': category.categoryid}) }}"><i class="fas fa-pen"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -30,4 +29,28 @@
     </table>
 
     <a href="{{ path('category_new') }}">Nouveau</a>
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#category').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      language: {
+            url: '../plugins/dataTables.fr_fr.json'
+        },
+      columnDefs: [
+        { orderable: false, width: "10%", targets: 2 }
+      ],        
+    });
+ });
+
+ </script>
 {% endblock %}
