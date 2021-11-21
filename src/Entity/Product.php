@@ -71,7 +71,22 @@ class Product
      */
     private $producer;
 
-    public function __construct($title, $category, $duration, 
+    public function __construct()
+    {
+        $arguments = func_get_args();
+        $numberOfArguments = func_num_args();
+
+        if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
+            call_user_func_array(array($this, $function), $arguments);
+        }       
+    }
+
+    public function __construct0()
+    {
+        //
+    }
+
+    public function __construct8($title, $category, $duration, 
         $description, $publicationDate, $qte, $producer, $icone)
     {
         $this->setTitle($title);
