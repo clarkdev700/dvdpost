@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer index{% endblock %}
+
+{% block content %}
+    <h1>Customer index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Customer_id</th>
+                <th>Surname</th>
+                <th>First_name</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>Addresse</th>
+                <th>Inscription_date</th>
+                <th>Password</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer.customerId }}</td>
+                <td>{{ customer.surname }}</td>
+                <td>{{ customer.firstName }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.telephone }}</td>
+                <td>{{ customer.addresse }}</td>
+                <td>{{ customer.inscriptionDate ? customer.inscriptionDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ customer.password }}</td>
+                <td>
+                   <a href="{{ path('customer_show', {'customer_id': customer.customerId}) }}">show</a>
+                    <a href="{{ path('customer_edit', {'customer_id': customer.customerId}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('customer_new') }}">Create new</a>
+{% endblock %}

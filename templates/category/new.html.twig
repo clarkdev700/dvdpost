@@ -1,0 +1,10 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Creation de Genre{% endblock %}
+{% block ctitle %}Nouveau Genre{%endblock%}
+{% block content %}
+
+	{{ include('category/_form.html.twig') }}
+ 
+    {#<a href="{{ path('category_index') }}">back to list</a>#}
+{% endblock %}
