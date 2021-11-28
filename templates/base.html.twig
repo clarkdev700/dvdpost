@@ -99,14 +99,14 @@
 		</div>
 
 		<!-- header search -->
-		<form action="#" class="header__search">
+		<form action="{{path('product_index')}}" method="GET" class="header__search">
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
 						<div class="header__search-content">
-							<input type="text" placeholder="Rechercher une vidéo">
+							<input type="text" name="search" placeholder="Rechercher une vidéo">
 
-							<button type="button">
+							<button type="submit">
 								<i class="icon ion-ios-search"></i>
 							</button>
 						</div>
