@@ -3,6 +3,13 @@
 {% block title %}Liste des Acteurs {% endblock %}
 {% block ctitle %}Liste des Acteurs {% endblock %}
 
+{% block header %}Acteur{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('actor_index')}}">Acteur</a></li>
+    <li class="breadcrumb-item active">Liste des acteurs</li>
+{% endblock %}
+
 {% block content %}
     <table class="table table-bordered table-striped" id="actors">
         <thead>
@@ -45,12 +52,13 @@
       "autoWidth": false,
       "responsive": true,
       language: {
-            url: '../plugins/dataTables.fr_fr.json'
+            url: '../../plugins/dataTables.fr_fr.json'
         },
       columnDefs: [
         { orderable: false, width: "10%", targets: 2 }
       ],        
     });
+    $('#acteur').addClass('active');
  });
 
  </script>

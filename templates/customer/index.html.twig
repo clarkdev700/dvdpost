@@ -1,22 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'back.html.twig' %}
 
-{% block title %}Customer index{% endblock %}
+{% block title %}Liste des Abonnés{% endblock %}
+{% block ctitle %}Liste des Abonnés {% endblock %}
 
-{% block body %}
-    <h1>Customer index</h1>
+{% block header %}Abonné{% endblock %}
 
-    <table class="table">
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('customer_index')}}">Abonné</a></li>
+    <li class="breadcrumb-item active">Liste des abonnés</li>
+{% endblock %}
+
+{% block content %}
+
+    <table id="customer" class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Customer_id</th>
-                <th>Surname</th>
-                <th>First_name</th>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prénom</th>
                 <th>Email</th>
                 <th>Telephone</th>
                 <th>Addresse</th>
-                <th>Inscription_date</th>
-                <th>Password</th>
-                <th>actions</th>
+                <th>Date Incription</th>
+                {#<th>actions</th>#}
             </tr>
         </thead>
         <tbody>
@@ -28,20 +34,43 @@
                 <td>{{ customer.email }}</td>
                 <td>{{ customer.telephone }}</td>
                 <td>{{ customer.addresse }}</td>
-                <td>{{ customer.inscriptionDate ? customer.inscriptionDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ customer.password }}</td>
-                <td>
-                    <a href="{{ path('customer_show', {'customer_id': customer.customer_id}) }}">show</a>
-                    <a href="{{ path('customer_edit', {'customer_id': customer.customer_id}) }}">edit</a>
-                </td>
+                <td>{{ customer.inscriptionDate ? customer.inscriptionDate|date('d/m/Y') : '' }}</td>
+                {#<td>
+                    <a href="{{ path('customer_edit', {'customer_id': customer.customerid}) }}"><i class="fas fa-pen"></i></a>
+                </td>#}
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">Aucun abonné trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('customer_new') }}">Create new</a>
+    {#<a href="{{ path('customer_new') }}">Create new</a>#}
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#customer').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      language: {
+            url: '../../plugins/dataTables.fr_fr.json'
+        },
+      columnDefs: [
+        { orderable: false, width: "10%", targets: 2 }
+      ],        
+    });
+    $('#abonne').addClass('active');
+ });
+
+ </script>
 {% endblock %}

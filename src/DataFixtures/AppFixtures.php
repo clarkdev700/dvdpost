@@ -9,12 +9,35 @@ use App\Entity\Producer;
 use App\Entity\Product;
 use App\Entity\ProductActor;
 use App\Entity\Category;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class AppFixtures extends Fixture
 {
+	private $passwordHasher;
+	
+	public function __construct(UserPasswordHasherInterface $passwordHasher = null)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+	
     public function load(ObjectManager $manager)
     {
+		//User
+		$user = new User();
+		$password = '123456';
+		$user->setEmail('admin@email.com')
+		     ->setFirstName('jean')
+		     ->setLastName('Claude');
+		$hashedPassword = $this->passwordHasher->hashPassword(
+                $user,
+                $password
+        );
+		$user->setPassword($hashedPassword); 
+        $user->setRoles(["ROLE_ADMIN"]); 
+		$manager->persist($user);
+		
     	//category
     	$category_1 = new Category("Comédie");
     	$manager->persist($category_1);

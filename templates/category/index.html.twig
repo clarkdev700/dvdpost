@@ -1,7 +1,15 @@
 {% extends 'back.html.twig' %}
 
-{% block title %}Liste des genres{% endblock %}
+{% block title %}Liste des Genres{% endblock %}
 {% block ctitle %}Liste des Genres {% endblock %}
+
+{% block header %}Genre{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('category_index')}}">Genre</a></li>
+    <li class="breadcrumb-item active">Liste des genres</li>
+{% endblock %}
+
 {% block content %}
     <table class="table table-bordered table-striped" id="category">
         <thead>
@@ -44,12 +52,13 @@
       "autoWidth": false,
       "responsive": true,
       language: {
-            url: '../plugins/dataTables.fr_fr.json'
+            url: '../../plugins/dataTables.fr_fr.json'
         },
       columnDefs: [
         { orderable: false, width: "10%", targets: 2 }
       ],        
     });
+    $('#genre').addClass('active');
  });
 
  </script>

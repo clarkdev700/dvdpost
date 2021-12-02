@@ -1,7 +1,7 @@
 <div style="display:inline">
 <form method="post" action="{{ path('product_delete', {'product_id': product.productid} ) }}" onsubmit="return confirm('Voulez vous vraiment retirer ce film du catalogue?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.productid) }}">
-    <button class="btn btn-link">Retirer</button>
+    <button class="btn btn-link"><span class="text-danger"><i class="fas fa-trash"></i></span></button>
 </form>
 </div>
 

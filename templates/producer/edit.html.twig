@@ -1,13 +1,30 @@
 {% extends 'back.html.twig' %}
 
-{% block title %}Editer un Reacute;alisateur{% endblock %}
-{% block ctitle %}Edition Reacute;alisateur {%endblock%}
+{% block title %}Editer un R&eacute;alisateur{% endblock %}
+{% block ctitle %}Edition R&eacute;alisateur {%endblock%}
+
+{% block header %}Réalisateur{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('producer_index')}}">Réalisateur</a></li>
+    <li class="breadcrumb-item active">Editder un réalisateur</li>
+{% endblock %}
 
 {% block content %}
 
     {{ include('producer/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('producer_index') }}">back to list</a>
+    <a href="{{ path('producer_index') }}">Retour</a>
 
-    {{ include('producer/_delete_form.html.twig') }}
+    {#{ include('producer/_delete_form.html.twig') }#}
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#realisateur').addClass('active');
+ });
+
+ </script>
 {% endblock %}

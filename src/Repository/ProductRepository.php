@@ -81,6 +81,27 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+      * @return Product[] Returns an array of Product objects
+     */
+    
+    public function findProductByCategory($category, $productId)
+    {
+        $limitRecord = 6;
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.product_id', 'DESC')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.category = :val')
+            ->andWhere('p.product_id <> :productid')
+            ->setParameters(['val'=> $category, 
+                            'productid' => $productId, 
+                            'status'=> 0])
+            ->setMaxResults($limitRecord)
+            ->getQuery()
+            ->getResult()
+        ;
+    }    
+
     function findProduct($motcle, $genre = null, $datedebut = null, $datefin = null) {
         $conn = $this->getEntityManager()->getConnection();
         

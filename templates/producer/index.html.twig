@@ -3,6 +3,13 @@
 {% block title %}Liste des R&eacute;alisateurs {% endblock %}
 {% block ctitle %}Liste des R&eacute;alisateurs {% endblock %}
 
+{% block header %}Réalisateur{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('producer_index')}}">Réalisateur</a></li>
+    <li class="breadcrumb-item active">Liste des réalisateurs</li>
+{% endblock %}
+
 {% block content %}
     <table class="table table-bordered table-striped" id="producer">
         <thead>
@@ -45,12 +52,13 @@
       "autoWidth": false,
       "responsive": true,
       language: {
-            url: '../plugins/dataTables.fr_fr.json'
+            url: '../../plugins/dataTables.fr_fr.json'
         },
       columnDefs: [
         { orderable: false, width: "10%", targets: 2, className: 'dt-center' }
       ],        
     });
+    $('#realisateur').addClass('active');
  });
 
  </script>

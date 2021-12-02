@@ -3,6 +3,13 @@
 {% block title %}Liste des Films {% endblock %}
 {% block ctitle %}Liste des Films {%endblock%}
 
+{% block header %}Film{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('back_product_index')}}">Films</a></li>
+    <li class="breadcrumb-item active">Liste des films</li>
+{% endblock %}
+
 {% block content %}
     <table class="table table-bordered table-striped" id="product">
         <thead>
@@ -29,7 +36,7 @@
                 <td>{{ product.duration }}</td>
                 <td>
                     {{ include('product/_delete_form.html.twig') }}
-                    <a href="{{ path('product_edit', {'product_id': product.productid}) }}">edit</a>
+                    <a href="{{ path('product_edit', {'product_id': product.productid}) }}"><i class="fas fa-pen"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -56,13 +63,14 @@
       "autoWidth": false,
       "responsive": true,
       language: {
-            url: '../plugins/dataTables.fr_fr.json'
+            url: '../../plugins/dataTables.fr_fr.json'
         },
       columnDefs: [
         { orderable: false, targets: 2 },
         { orderable: false, width: "10%", targets: 7 }
       ],        
     });
+    $('#catalogue').addClass('active');
  });
 
  </script>

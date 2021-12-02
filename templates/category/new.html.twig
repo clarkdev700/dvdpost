@@ -2,9 +2,28 @@
 
 {% block title %}Creation de Genre{% endblock %}
 {% block ctitle %}Nouveau Genre{%endblock%}
+
+{% block header %}Genre{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('category_index')}}">Genre</a></li>
+    <li class="breadcrumb-item active">Créer un genre</li>
+{% endblock %}
+
 {% block content %}
 
 	{{ include('category/_form.html.twig') }}
  
-    {#<a href="{{ path('category_index') }}">back to list</a>#}
+    <a href="{{ path('category_index') }}">Retour</a>
+{% endblock %}
+
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#genre').addClass('active');
+ });
+
+ </script>
 {% endblock %}

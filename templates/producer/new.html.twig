@@ -3,9 +3,26 @@
 {% block title %}Cr&eacute;tion d'un R&eacute;alisateur{% endblock %}
 {% block ctitle %}Nouveau R&eacute;alisateur {%endblock%}
 
+{% block header %}Réalisateur{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('producer_index')}}">Réalisateur</a></li>
+    <li class="breadcrumb-item active">Créer un réalisateur</li>
+{% endblock %}
+
 {% block content %}
 
     {{ include('producer/_form.html.twig') }}
 
-    <a href="{{ path('producer_index') }}">back to list</a>
+    <a href="{{ path('producer_index') }}">Retour</a>
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#realisateur').addClass('active');
+ });
+
+ </script>
 {% endblock %}

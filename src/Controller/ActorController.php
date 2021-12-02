@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/actor")
+ * @Route("/admin/actor")
  */
 class ActorController extends AbstractController
 {
@@ -27,7 +27,7 @@ class ActorController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="actor_new", methods={"GET","POST"})
+     * @Route("/create", name="actor_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -46,16 +46,6 @@ class ActorController extends AbstractController
         return $this->renderForm('actor/new.html.twig', [
             'actor' => $actor,
             'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/{actor_id}", name="actor_show", methods={"GET"})
-     */
-    public function show(Actor $actor): Response
-    {
-        return $this->render('actor/show.html.twig', [
-            'actor' => $actor,
         ]);
     }
 

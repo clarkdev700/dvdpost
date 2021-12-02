@@ -3,9 +3,26 @@
 {% block title %}Cr&eacute;tion d'un Film {% endblock %}
 {% block ctitle %}Nouveau Film {%endblock%}
 
+{% block header %}Film{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('back_product_index')}}">Films</a></li>
+    <li class="breadcrumb-item active">Créer un film</li>
+{% endblock %}
+
 {% block content %}
 
     {{ include('product/_form.html.twig') }}
 
-    <a href="{{ path('product_index') }}">back to list</a>
+    <a href="{{ path('back_product_index') }}">Retour</a>
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#catalogue').addClass('active');
+ });
+
+ </script>
 {% endblock %}

@@ -37,6 +37,36 @@
         <a href="#" class="nav-link">Contact</a>
       </li>-->
     </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <span class="">Profile</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <!--<a href="#" class="dropdown-item">
+            <div class="media">
+              <div class="media-body">
+              </div>
+            </div>
+          </a>-->
+          <a href="#" class="dropdown-item dropdown-footer">Editer mon profil</a>
+          <div class="dropdown-divider"></div>
+          <a href="{{ path('app_logout') }}" class="dropdown-item dropdown-footer">Se Deconnecter 
+            <span class=""><i class="fas fa-power-off"></i></span>
+          </a>          
+        </div>
+      </li>
+     <!--<li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>-->
+ 
+    </ul>    
   </nav>
   <!-- /.navbar -->
 
@@ -51,58 +81,76 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      {% if app.user %}
+       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">                 
+           Bienvenue {{ app.user.lastname }}
+          </a>
         </div>
       </div>
-
+     {% endif %}
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" id="dashboard">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
           </li>
-		 <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+		      <li class="nav-item">
+            <a href="{{path('category_index')}}" class="nav-link" id="genre">
+              <i class="nav-icon fas fa-image"></i>
               <p>
                 Genre
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+            <a href="{{path('actor_index')}}" class="nav-link" id="acteur">
+              <i class="nav-icon fas fa-user-shield"></i>
+              <p>
+                Acteurs
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{path('producer_index')}}" class="nav-link" id="realisateur">
+              <i class="nav-icon fas fa-camera-retro"></i>
+              <p>
+                Realisateur
+              </p>
+            </a>
+          </li>                     
+          <li class="nav-item">
+            <a href="{{path('back_product_index')}}" class="nav-link" id="catalogue">
+              <i class="nav-icon fas fa-film"></i>
               <p>
                 Catalogue
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+            <a href="{{path('customer_index')}}" class="nav-link" id="abonne">
+              <i class="nav-icon fas fa-users"></i>
               <p>
-                Gallery
+                Abonnés
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+            <a href="{{path('user_index')}}" class="nav-link" id="utilisateur">
+              <i class="nav-icon fas fa-user-cog"></i>
               <p>
-                Gallery
+               Utilisateurs
               </p>
             </a>
           </li>		  
@@ -120,13 +168,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Fixed Layout</h1>
+            <h1>{% block header %}Layout{% endblock %}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Layout</a></li>
-              <li class="breadcrumb-item active">Fixed Layout</li>
+              {%block breadcrumb %}{% endblock %}
             </ol>
           </div>
         </div>

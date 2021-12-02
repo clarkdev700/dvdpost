@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/category")
+ * @Route("/admin/category")
  */
 class CategoryController extends AbstractController
 {
@@ -27,7 +27,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="category_new", methods={"GET","POST"})
+     * @Route("/create", name="category_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -46,16 +46,6 @@ class CategoryController extends AbstractController
         return $this->renderForm('category/new.html.twig', [
             'category' => $category,
             'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/{category_id}", name="category_show", methods={"GET"})
-     */
-    public function show(Category $category): Response
-    {
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
         ]);
     }
 

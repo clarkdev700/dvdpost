@@ -10,14 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-/**
- * @Route("/customer")
- */
+
 class CustomerController extends AbstractController
 {
     /**
-     * @Route("/", name="customer_index", methods={"GET"})
+     * @Route("/admin/customer/", name="customer_index", methods={"GET"})
      */
     public function index(CustomerRepository $customerRepository): Response
     {
@@ -27,15 +26,24 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="customer_new", methods={"GET", "POST"})
+     * @Route("/register", name="customer_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher = null): Response
     {
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $password = $data->getPassword();
+            //
+            $hashedPassword = $passwordHasher->hashPassword(
+                $customer,
+                $password
+            );
+            $customer->setPassword($hashedPassword);
+            $customer->setInscriptionDate(new \DateTime());
             $entityManager->persist($customer);
             $entityManager->flush();
 
@@ -49,17 +57,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/{customer_id}", name="customer_show", methods={"GET"})
-     */
-    public function show(Customer $customer): Response
-    {
-        return $this->render('customer/show.html.twig', [
-            'customer' => $customer,
-        ]);
-    }
-
-    /**
-     * @Route("/{customer_id}/edit", name="customer_edit", methods={"GET", "POST"})
+     * @Route("/admin/{customer_id}/edit", name="customer_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Customer $customer, EntityManagerInterface $entityManager): Response
     {
@@ -79,7 +77,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/{customer_id}", name="customer_delete", methods={"POST"})
+     * @Route("/admin/customer/{customer_id}", name="customer_delete", methods={"POST"})
      */
     public function delete(Request $request, Customer $customer, EntityManagerInterface $entityManager): Response
     {

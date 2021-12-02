@@ -15,15 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
-use App\Service\FileUploader;
 
-/**
- * @Route("/product")
- */
+
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/", name="product_index", methods={"GET"})
+     * @Route("/product", name="product_index", methods={"GET"})
      */
     public function index(ProductRepository $productRepository, 
         CategoryRepository $categoryRepository): Response
@@ -31,16 +28,18 @@ class ProductController extends AbstractController
         $footerProducts = $productRepository->findTheBestConsume(2);
         $movies = $productRepository->findNewProduct(12);
         $categories = $categoryRepository->findAll();
+        $rates = [3.0, 4.0, 5.0, 8.3, 8.4, 5.5, 6.0, 7.2, 4.6, 3.3, 5.4, 6.3];
 
         return $this->render('product/frontindex.html.twig', [
             'pfooters' => $footerProducts,
             'movies' => $movies,
-            'categories' => $categories
+            'categories' => $categories,
+            'rate' => $rates
         ]);
     }
 
     /**
-     * @Route("/index", name="back_product_index", methods={"GET"})
+     * @Route("/admin/product/index", name="back_product_index", methods={"GET"})
      */
     public function indexProduct(ProductRepository $productRepository): Response
     {
@@ -50,7 +49,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="product_new", methods={"GET","POST"})
+     * @Route("/admin/product/create", name="product_new", methods={"GET","POST"})
      */
     public function new(Request $request, FileUploader $fileUploader): Response
     {
@@ -93,17 +92,23 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{product_id}", name="product_show", methods={"GET"})
+     * @Route("/product/{product_id}", name="product_show", methods={"GET"})
      */
-    public function show(Product $product): Response
+    public function show(Product $product, ProductRepository $productRepository): Response
     {
+        $category = $product->getCategory()->getCategoryId();
+        $relatedProducts = $productRepository->findProductByCategory($category, $product->getProductId());
+        //
+        $rates = [3, 4, 5, 8.3, 8.4, 5.5, 6, 7.2, 4.6, 3.3, 5.4, 6.3];
         return $this->render('product/details.html.twig', [
             'product' => $product,
+            'related_products' => $relatedProducts,
+            'rate' => $rates
         ]);
     }   
 
     /**
-     * @Route("/{product_id}/edit", name="product_edit", methods={"GET","POST"})
+     * @Route("/admin/product/{product_id}/edit", name="product_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Product $product): Response
     {
@@ -163,7 +168,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{product_id}", name="product_delete", methods={"POST"})
+     * @Route("/admin/product/{product_id}", name="product_delete", methods={"POST"})
      */
     public function delete(Request $request, Product $product): Response
     {

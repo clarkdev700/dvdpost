@@ -1,19 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'back.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Liste des utilisateurs {% endblock %}
 
-{% block body %}
-    <h1>User index</h1>
+{% block ctitle %}Liste des utilisateurs{% endblock %}
 
-    <table class="table">
+{% block header %}Utilisateur{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{path('user_index')}}">Utilisateurs</a></li>
+    <li class="breadcrumb-item active">Liste des utilisateurs</li>
+{% endblock %}
+
+{% block content %}
+
+    <table id="user" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>First_name</th>
-                <th>Last_name</th>
+                <th>Role</th>
+                <th>Prénom</th>
+                <th>Nom</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,21 +30,44 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun utilisateur trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
+    <a href="{{ path('user_new') }}">Nouveau</a>
+{% endblock %}
+
+{% block script %}
+ {{parent()}}
+ <script>
+ $(function () {
+     $('#user').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      language: {
+            url: '../../plugins/dataTables.fr_fr.json'
+        },
+      columnDefs: [
+        { orderable: false, width: "10%", targets: 2 }
+      ],        
+    });
+    $('#utilisateur').addClass('active');
+ });
+
+ </script>
 {% endblock %}
